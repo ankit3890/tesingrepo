@@ -14,15 +14,14 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "plugins": [
-      {
-        "name": "next"
-      }
+      { "name": "next" }
     ],
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"]
     }
   },
+
   "include": [
     "next-env.d.ts",
     ".next/types/**/*.ts",
@@ -31,5 +30,10 @@
     "**/*.ts",
     "**/*.tsx"
   ],
-  "exclude": ["node_modules"]
+
+  "exclude": [
+    "node_modules",
+    "attendance-system/backend",
+    ".next"
+  ]
 }
