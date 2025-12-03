@@ -102,7 +102,7 @@ export default function AdminUserProfilePage() {
                   {user.name || "No name"}
                 </p>
                 <p className="text-xs text-slate-500">
-                  Student ID: <span className="font-mono">{user.studentId}</span>
+                  CyberVidya ID: <span className="font-mono">{user.studentId}</span>
                 </p>
                 <p className="text-xs text-slate-500">
                   Username: {user.username ? `@${user.username}` : "Not set"}

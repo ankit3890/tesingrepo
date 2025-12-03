@@ -86,14 +86,14 @@ export default function RegisterPage() {
                     <form onSubmit={handleSubmit} className="space-y-5">
                         <div>
                             <label className="block text-sm font-medium text-slate-700 mb-2">
-                                STUDENT ID
+                                CYBERVIDYA ID
                             </label>
                             <input
                                 type="text"
                                 value={studentId}
                                 onChange={(e) => setStudentId(e.target.value)}
                                 className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                                placeholder="202501100300040"
+                                placeholder="202412345678901"
                                 required
                             />
                         </div>
@@ -160,7 +160,7 @@ export default function RegisterPage() {
                         {/* Password Policy Notice */}
                         <div className="p-3 bg-blue-50 border border-blue-200 rounded-lg">
                             <p className="text-xs text-blue-900">
-                                <strong>Important:</strong> This password is unique to CollegeConnect. We only store your CyberVidya Student ID for profile sync. Your CyberVidya password is never stored or accessed by our system.
+                                <strong>Important:</strong> This password is unique to CollegeConnect. We only store your CyberVidya ID for profile sync. Your CyberVidya password is never stored or accessed by our system.
                             </p>
                         </div>
 

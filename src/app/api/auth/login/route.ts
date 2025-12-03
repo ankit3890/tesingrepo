@@ -23,7 +23,7 @@ export async function POST(req: Request) {
 
     if ((!studentId && !email) || !password) {
       return jsonError(
-        "Student ID or email and password are required",
+        "CyberVidya ID or email and password are required",
         400
       );
     }

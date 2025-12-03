@@ -662,7 +662,7 @@ export default function ProfilePage() {
                                             className="mt-1 border rounded-md px-2 py-1 w-full text-sm"
                                             value={cyberId}
                                             onChange={(e) => setCyberId(e.target.value)}
-                                            placeholder="e.g. 202501100300040"
+                                            placeholder="e.g. 202412345678901"
                                         />
                                     </div>
 
@@ -714,7 +714,7 @@ export default function ProfilePage() {
                                     className="mt-1 border rounded-md px-2 py-1 w-full text-sm"
                                     value={cyberId}
                                     onChange={(e) => setCyberId(e.target.value)}
-                                    placeholder="e.g. 202501100300040"
+                                    placeholder="e.g. 202412345678901"
                                 />
                             </div>
 

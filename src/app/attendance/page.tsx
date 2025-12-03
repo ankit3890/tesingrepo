@@ -555,7 +555,7 @@ export default function AttendancePage() {
                         className="w-full rounded-lg border border-slate-200 px-4 py-3 text-sm bg-white focus:border-slate-900 focus:ring-2 focus:ring-slate-900/10 outline-none transition-all placeholder:text-slate-400"
                         value={cyberId}
                         onChange={(e) => setCyberId(e.target.value)}
-                        placeholder="e.g. 202501100100010"
+                        placeholder="e.g. 202412345678901"
                       />
                     </div>
                   </div>

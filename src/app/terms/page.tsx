@@ -51,7 +51,7 @@ export default function TermsPage() {
                             We are committed to protecting your privacy and personal information:
                         </p>
                         <ul className="list-disc list-inside space-y-2 text-slate-700 ml-4">
-                            <li>We only store your CyberVidya Student ID for attendance synchronization purposes</li>
+                            <li>We only store your CyberVidya ID for attendance synchronization purposes</li>
                             <li>Your CyberVidya password is <strong>never stored or accessed</strong> by our system</li>
                             <li>Your email and profile information are stored securely</li>
                             <li>We do not share your personal information with third parties without your consent</li>

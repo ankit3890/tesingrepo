@@ -280,7 +280,7 @@ export default function AdminUsersPage() {
                                 <thead className="bg-slate-50 border-b border-slate-200">
                                     <tr>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">User</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Student ID</th>
+                                        <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">CyberVidya ID</th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Branch/Year</th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Role</th>
                                         <th className="px-6 py-4 text-left text-xs font-semibold text-slate-700 uppercase tracking-wider">Status</th>
@@ -350,8 +350,8 @@ export default function AdminUsersPage() {
                                                             return (
                                                                 <div className="flex flex-col items-start gap-1">
                                                                     <span className={`inline-flex px-3 py-1 text-xs font-semibold rounded-full border ${isActive
-                                                                            ? "bg-green-100 text-green-800 border-green-300"
-                                                                            : "bg-slate-100 text-slate-600 border-slate-300"
+                                                                        ? "bg-green-100 text-green-800 border-green-300"
+                                                                        : "bg-slate-100 text-slate-600 border-slate-300"
                                                                         }`}>
                                                                         {isActive ? "Active" : "Offline"}
                                                                     </span>
@@ -441,7 +441,7 @@ export default function AdminUsersPage() {
 
                             <div className="grid grid-cols-2 gap-4">
                                 <div>
-                                    <p className="text-sm text-slate-500">Student ID</p>
+                                    <p className="text-sm text-slate-500">CyberVidya ID</p>
                                     <p className="font-mono font-medium">{selectedUser.studentId}</p>
                                 </div>
                                 <div>
