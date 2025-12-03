@@ -2,22 +2,30 @@
 import mongoose from "mongoose";
 import fs from "fs";
 import path from "path";
-import { connectDb, getGridFSBucket } from "./src/lib/syllabus/db";
-import { parsePdfAndExtract } from "./src/lib/syllabus/pdfParser";
-import { DocumentModel } from "./src/models/syllabus/Document";
-import { PageModel } from "./src/models/syllabus/Page";
 import dotenv from "dotenv";
 
 dotenv.config({ path: ".env.local" });
-console.log("MONGO_URI loaded:", process.env.MONGODB_URI ? "Yes" : "No");
+
+// Ensure MONGODB_URI is set
+if (!process.env.MONGODB_URI) {
+    console.warn("Warning: MONGODB_URI is not defined in .env.local");
+} else {
+    console.log("MONGO_URI loaded from .env.local");
+}
 
 const FILE_PATH = "C:/Users/ankit/Desktop/college-connect/syllabus-tool/backend/uploads/bookbtech118092025.pdf";
 
 async function ingest() {
     try {
-        console.log("Connecting to DB...");
+        // Dynamic imports to ensure env var is set before module load
+        const { connectDb, getGridFSBucket } = await import("./src/lib/syllabus/db");
+        const { parsePdfAndExtract } = await import("./src/lib/syllabus/pdfParser");
+        const { DocumentModel } = await import("./src/models/syllabus/Document");
+        const { PageModel } = await import("./src/models/syllabus/Page");
+
+        console.log("Step 1: Connecting to DB...");
         await connectDb();
-        console.log("Connected.");
+        console.log("Step 1: Connected.");
 
         if (!fs.existsSync(FILE_PATH)) {
             console.error("File not found:", FILE_PATH);
@@ -28,6 +36,7 @@ async function ingest() {
         const buffer = fs.readFileSync(FILE_PATH);
 
         // 1. Upload to GridFS
+        console.log("Step 2: Uploading to GridFS...");
         const bucket = getGridFSBucket();
         const uploadStream = bucket.openUploadStream(filename);
 
@@ -38,14 +47,15 @@ async function ingest() {
         });
 
         await streamPromise;
-        console.log("Uploaded to GridFS");
+        console.log("Step 2: Uploaded to GridFS");
 
         // 2. Parse PDF
-        console.log("Parsing PDF...");
+        console.log("Step 3: Parsing PDF...");
         const docData = await parsePdfAndExtract(FILE_PATH);
-        console.log("PDF Parsed. Pages:", docData.pages.length);
+        console.log("Step 3: PDF Parsed. Pages:", docData.pages.length);
 
         // 3. Save Document Metadata
+        console.log("Step 4: Saving Metadata...");
         const newDoc = await DocumentModel.create({
             title: docData.title,
             filename: filename,
