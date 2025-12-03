@@ -77,7 +77,7 @@ export async function POST(req: Request) {
     // 🔒 Security: Admins can ONLY edit students
     if (adminUser.role === "admin" && targetUser.role !== "student") {
       return NextResponse.json(
-        { msg: "Admins can only edit students" },
+        { msg: "Admin cannot edit role of other admin or superadmin" },
         { status: 403 }
       );
     }

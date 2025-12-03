@@ -69,7 +69,7 @@ export async function POST(req: Request) {
     // 🔒 Security: Admins can ONLY ban students
     if (adminUser.role === "admin" && targetUser.role !== "student") {
       return NextResponse.json(
-        { msg: "Admins can only ban students" },
+        { msg: "Admin cannot ban other admin or superadmin" },
         { status: 403 }
       );
     }
