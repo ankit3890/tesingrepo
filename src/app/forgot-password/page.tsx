@@ -17,7 +17,7 @@ export default function ForgotPasswordPage() {
     setResetUrl(null);
 
     if (!email && !studentId) {
-      setMessage("Please enter email or student ID");
+      setMessage("Please enter email or CyberVidya ID");
       return;
     }
 
@@ -37,7 +37,7 @@ export default function ForgotPasswordPage() {
 
       setMessage(
         data.msg ||
-          "If an account exists, a password reset link has been generated."
+        "If an account exists, a password reset link has been generated."
       );
 
       if (data.resetUrl) {

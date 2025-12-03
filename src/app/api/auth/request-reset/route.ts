@@ -19,7 +19,7 @@ export async function POST(req: Request) {
 
     if (!email && !studentId) {
       return NextResponse.json(
-        { msg: "Email or student ID is required" },
+        { msg: "Email or CyberVidya ID is required" },
         { status: 400 }
       );
     }

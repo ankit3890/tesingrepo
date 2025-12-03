@@ -157,8 +157,8 @@ export default function AttendancePage() {
     overallPercentage >= 75
       ? "bg-emerald-500"
       : overallPercentage >= 60
-      ? "bg-amber-500"
-      : "bg-red-500";
+        ? "bg-amber-500"
+        : "bg-red-500";
 
   return (
     <div className="min-h-screen bg-slate-100">
@@ -175,7 +175,7 @@ export default function AttendancePage() {
         <section className="rounded-xl bg-white border shadow-sm p-4 space-y-3">
           <h2 className="text-lg font-semibold">Login to CyberVidya</h2>
           <p className="text-xs text-slate-500">
-            Use your KIET/CyberVidya student ID and password. We will fetch only
+            Use your KIET/CyberVidya ID and password. We will fetch only
             your attendance data.
           </p>
 
@@ -185,7 +185,7 @@ export default function AttendancePage() {
           >
             <div className="flex-1">
               <label className="block text-xs font-medium text-slate-600 mb-1">
-                Student ID (CyberVidya username)
+                CyberVidya ID
               </label>
               <input
                 className="w-full rounded-md border px-3 py-2 text-sm bg-white"
@@ -434,8 +434,8 @@ export default function AttendancePage() {
                                 d.status?.toUpperCase() === "PRESENT"
                                   ? "text-emerald-600"
                                   : d.status?.toUpperCase() === "ABSENT"
-                                  ? "text-red-600"
-                                  : "text-slate-700"
+                                    ? "text-red-600"
+                                    : "text-slate-700"
                               }
                             >
                               {d.status}

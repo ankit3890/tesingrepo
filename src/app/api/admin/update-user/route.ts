@@ -96,7 +96,7 @@ export async function POST(req: Request) {
       role: targetUser.role,
     };
 
-    // 🔒 Security: Student ID and Name are IMMUTABLE for everyone via this API
+    // 🔒 Security: CyberVidya ID and Name are IMMUTABLE for everyone via this API
     // (Previously allowed for Super Admin, now restricted as per request)
     // if (adminUser.role === "superadmin") { ... } -> REMOVED
 

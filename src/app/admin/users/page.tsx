@@ -600,7 +600,7 @@ export default function AdminUsersPage() {
                         </div>
                         <div className="p-6 space-y-4">
                             <div>
-                                <label className="block text-sm font-medium text-slate-700 mb-2">Student ID (Cybervidya ID)</label>
+                                <label className="block text-sm font-medium text-slate-700 mb-2">CyberVidya ID</label>
                                 <input
                                     type="text"
                                     value={editForm.studentId}
