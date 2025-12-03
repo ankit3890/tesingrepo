@@ -125,13 +125,29 @@ export async function POST(req: Request) {
     let oldRole: string | undefined;
     let newRole: string | undefined;
 
-    if (role && adminUser.role === "superadmin") {
-      if (role !== targetUser.role) {
-        roleChanged = true;
-        oldRole = targetUser.role;
-        newRole = role;
+    if (role) {
+      // Super Admin can assign any role
+      if (adminUser.role === "superadmin") {
+        if (role !== targetUser.role) {
+          roleChanged = true;
+          oldRole = targetUser.role;
+          newRole = role;
+          targetUser.role = role;
+        }
       }
-      targetUser.role = role;
+      // Admin can only assign "student" or "tester"
+      else if (adminUser.role === "admin") {
+        if (role === "student" || role === "tester") {
+          if (role !== targetUser.role) {
+            roleChanged = true;
+            oldRole = targetUser.role;
+            newRole = role;
+            targetUser.role = role;
+          }
+        } else if (role === "admin" || role === "superadmin") {
+          return NextResponse.json({ msg: "Admin cannot promote users to admin/superadmin" }, { status: 403 });
+        }
+      }
     }
 
     await targetUser.save();
