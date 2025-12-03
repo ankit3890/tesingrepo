@@ -15,7 +15,7 @@ export interface IUser extends Document {
   mobileNumber?: string;
   dateOfBirth?: string;
   gender?: string;
-  role?: "student" | "admin" | "superadmin";
+  role?: "student" | "admin" | "superadmin" | "tester";
   profilePhoto?: string;
   hasSyncedFromCyberVidya: boolean;
   username?: string;
