@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, Suspense } from "react";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
@@ -38,7 +38,7 @@ interface Message {
     reactions?: Reaction[];
 }
 
-export default function ChatPage() {
+function ChatContent() {
     const searchParams = useSearchParams();
     const [currentUser, setCurrentUser] = useState<User | null>(null);
     const [friends, setFriends] = useState<Friend[]>([]);
@@ -102,7 +102,7 @@ export default function ChatPage() {
             isMounted = false;
             clearInterval(interval);
         };
-    }, [currentUser]);
+    }, [currentUser, searchParams]);
 
     // Handle friend selection
     const handleSelectFriend = (friend: Friend) => {
@@ -219,6 +219,18 @@ export default function ChatPage() {
                 </div>
             </main>
         </div>
+    );
+}
+
+export default function ChatPage() {
+    return (
+        <Suspense fallback={
+            <div className="h-screen bg-slate-100 dark:bg-slate-900 flex justify-center items-center">
+                <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-indigo-600"></div>
+            </div>
+        }>
+            <ChatContent />
+        </Suspense>
     );
 }
 
