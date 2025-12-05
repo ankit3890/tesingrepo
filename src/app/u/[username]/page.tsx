@@ -58,13 +58,14 @@ export default function PublicProfilePage() {
 
     // Follow System State
     const [isFollowing, setIsFollowing] = useState(false);
+    const [isMutual, setIsMutual] = useState(false);
     const [followLoading, setFollowLoading] = useState(false);
     const [showUserListModal, setShowUserListModal] = useState<"followers" | "following" | null>(null);
     const [userList, setUserList] = useState<UserList[]>([]);
     const [userListLoading, setUserListLoading] = useState(false);
 
     useEffect(() => {
-        // Fetch current user to check if we should show "Edit Profile"
+        // Fetch current user
         fetch("/api/profile/me", { cache: "no-store" })
             .then((res) => {
                 if (res.ok) return res.json();
@@ -75,7 +76,7 @@ export default function PublicProfilePage() {
                     setCurrentUserUsername(data.profile.username);
                 }
             })
-            .catch(() => { }); // ignore error if not logged in
+            .catch(() => { });
 
         // Fetch public profile
         fetch(`/api/profile/${username}?t=${Date.now()}`, { cache: "no-store" })
@@ -100,12 +101,11 @@ export default function PublicProfilePage() {
             .then(res => res.json())
             .then(data => {
                 setIsFollowing(data.isFollowing);
+                setIsMutual(data.isMutual);
             })
             .catch(() => { });
 
         // Log View Profile
-        // We use a small timeout to ensure we don't log if the profile doesn't exist (handled by error check above, but this is safer)
-        // Actually, better to just fire and forget.
         const logView = async () => {
             try {
                 await fetch("/api/log/activity", {
@@ -117,7 +117,7 @@ export default function PublicProfilePage() {
                     })
                 });
             } catch (e) {
-                // ignore logging errors
+                // ignore
             }
         };
         logView();
@@ -136,6 +136,7 @@ export default function PublicProfilePage() {
 
             if (res.ok) {
                 setIsFollowing(data.isFollowing);
+                setIsMutual(data.isMutual);
                 // Update counts locally
                 setProfile(prev => prev ? {
                     ...prev,
@@ -277,16 +278,30 @@ export default function PublicProfilePage() {
                                     </Link>
                                 </>
                             ) : (
-                                <button
-                                    onClick={handleFollowToggle}
-                                    disabled={followLoading}
-                                    className={`px-3 py-1 rounded-lg text-xs font-bold transition-all shadow-sm border ${isFollowing
-                                        ? "bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-800"
-                                        : "bg-black dark:bg-white border-black dark:border-white text-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-200"
-                                        }`}
-                                >
-                                    {followLoading ? "..." : isFollowing ? "Following" : "Follow"}
-                                </button>
+                                <div className="flex gap-2">
+                                    {/* Message Button - Only if mutual */}
+                                    {isMutual && (
+                                        <Link
+                                            href={`/chat?friendId=${profile._id}`}
+                                            className="px-3 py-1 bg-indigo-600 border border-indigo-700 rounded-lg text-xs font-bold text-white hover:bg-indigo-700 transition-all shadow-sm flex items-center gap-1"
+                                        >
+                                            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                                            </svg>
+                                            Message
+                                        </Link>
+                                    )}
+                                    <button
+                                        onClick={handleFollowToggle}
+                                        disabled={followLoading}
+                                        className={`px-3 py-1 rounded-lg text-xs font-bold transition-all shadow-sm border ${isFollowing
+                                            ? "bg-white dark:bg-slate-800 border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-200 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-600 dark:hover:text-red-400 hover:border-red-200 dark:hover:border-red-800"
+                                            : "bg-black dark:bg-white border-black dark:border-white text-white dark:text-black hover:bg-slate-800 dark:hover:bg-slate-200"
+                                            }`}
+                                    >
+                                        {followLoading ? "..." : isFollowing ? "Following" : "Follow"}
+                                    </button>
+                                </div>
                             )}
                         </div>
 
@@ -434,7 +449,7 @@ export default function PublicProfilePage() {
                                                     "bg-pink-50 dark:bg-pink-900/30 text-pink-700 dark:text-pink-300 border-pink-200 dark:border-pink-800",
                                                     "bg-teal-50 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-800",
                                                 ];
-                                                const colorClass = colors[(i + 2) % colors.length]; // Offset by 2 for variety from interests
+                                                const colorClass = colors[(i + 2) % colors.length];
                                                 return (
                                                     <span key={i} className={`px-2 py-0.5 rounded-md border text-xs font-medium ${colorClass}`}>
                                                         {tag}

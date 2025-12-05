@@ -97,6 +97,12 @@ export async function POST(
             await User.findByIdAndUpdate(currentUserId, { $inc: { followingCount: 1 } });
             await User.findByIdAndUpdate(targetUser._id, { $inc: { followersCount: 1 } });
 
+            // Check if they follow me (to determine if it became mutual)
+            const followedBy = await Follow.findOne({
+                followerId: targetUser._id,
+                followingId: currentUserId,
+            });
+
             // Log Activity
             await UserActivityLog.create({
                 action: "FOLLOW_USER",
@@ -108,7 +114,11 @@ export async function POST(
                 userAgent: req.headers.get("user-agent") || "unknown",
             });
 
-            return NextResponse.json({ isFollowing: true, msg: "Followed" });
+            return NextResponse.json({
+                isFollowing: true,
+                isMutual: !!followedBy,
+                msg: "Followed"
+            });
         }
 
     } catch (err) {
@@ -136,12 +146,22 @@ export async function GET(
             return NextResponse.json({ isFollowing: false });
         }
 
+        // Check if I follow them
         const existingFollow = await Follow.findOne({
             followerId: currentUserId,
             followingId: targetUser._id,
         });
 
-        return NextResponse.json({ isFollowing: !!existingFollow });
+        // Check if they follow me (for mutual status)
+        const followedBy = await Follow.findOne({
+            followerId: targetUser._id,
+            followingId: currentUserId,
+        });
+
+        return NextResponse.json({
+            isFollowing: !!existingFollow,
+            isMutual: !!(existingFollow && followedBy)
+        });
 
     } catch (err) {
         console.error("Check follow status error:", err);
