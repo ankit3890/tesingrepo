@@ -176,7 +176,7 @@ const UserSchema: Schema<IUser> = new Schema(
 
 // Force new model compilation to ensure schema updates are applied
 const User: Model<IUser> =
-  mongoose.models.User_Fixed_V1 || mongoose.model<IUser>("User_Fixed_V1", UserSchema, "users");
+  mongoose.models.User || mongoose.model<IUser>("User", UserSchema, "users");
 
 export default User;
 
